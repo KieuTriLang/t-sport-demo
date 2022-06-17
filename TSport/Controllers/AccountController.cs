@@ -20,6 +20,10 @@ namespace TShop.Controllers
         [Route("login")]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -49,6 +53,10 @@ namespace TShop.Controllers
         [Route("register")]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -76,6 +84,14 @@ namespace TShop.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signinManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

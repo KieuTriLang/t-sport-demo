@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -126,8 +127,19 @@
                                         <li><a asp-controller="Home" asp-action="AboutUs"><span>About Us</span></a></li>
                                         <li><a asp-controller="Blog" asp-action="Index"><span>Blog</span></a></li>
                                         <li><a asp-controller="Home" asp-action="Contact"><span>Contact</span></a></li>
-                                        <li><a asp-controller="Account" asp-action="Login"><span>Login</span></a></li>
-                                        <li><a asp-controller="Account" asp-action="Register"><span>Register</span></a></li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            
+                                            <form id="logoutForm" action="/account/logout" method="post" class="d-none"></form>
+                                            <li><a href="#">@User.Identity.Name</a></li>
+                                            <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i></a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a asp-controller="Account" asp-action="Login"><span>Login</span></a></li>
+                                            <li><a asp-controller="Account" asp-action="Register"><span>Register</span></a></li>
+                                        }
+
                                     </ul>
                                 </div>
                             </div>
