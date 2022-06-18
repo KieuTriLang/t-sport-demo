@@ -1,16 +1,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TSport.Models.Data;
+using TSport.Services.BlogService;
+using TSport.Services.BrandService;
+using TSport.Services.CategoryService;
+using TSport.Services.ColorProductService;
+using TSport.Services.ColorService;
+using TSport.Services.OHProductService;
+using TSport.Services.OrderHistoryService;
+using TSport.Services.ProductService;
+using TSport.Services.ReviewService;
+using TSport.Services.SizeService;
 
 namespace TSport
 {
@@ -40,6 +45,16 @@ namespace TSport
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 0;
             });
+            services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IColorProductService, ColorProductService>();
+            services.AddScoped<IColorService, ColorService>();
+            services.AddScoped<IOHProductService, OHProductService>();
+            services.AddScoped<IOrderHistoryService, OrderHistoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<ISizeService, SizeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

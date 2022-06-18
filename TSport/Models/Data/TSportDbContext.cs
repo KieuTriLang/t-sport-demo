@@ -21,5 +21,12 @@ namespace TSport.Models.Data
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            //builder.Entity<Product>().HasData(
+            //    new Product { }
+            //    );
+        }
     }
 }
