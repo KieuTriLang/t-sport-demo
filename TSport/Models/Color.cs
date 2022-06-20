@@ -6,10 +6,10 @@ namespace TSport.Models
     {
         public Color()
         {
-            this.ColorProducts = new HashSet<ColorProduct>();
+            this.Products = new HashSet<Product>();
         }
         public int Id { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<ColorProduct> ColorProducts { get; set; }
+        public string HexCode { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }

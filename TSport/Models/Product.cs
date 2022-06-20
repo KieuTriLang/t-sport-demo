@@ -6,7 +6,7 @@ namespace TSport.Models
     {
         public Product()
         {
-            this.ColorProducts = new HashSet<ColorProduct>();
+            this.Colors = new HashSet<Color>();
             this.Sizes = new HashSet<Size>();
             this.Reviews = new HashSet<Review>();
         }
@@ -24,7 +24,7 @@ namespace TSport.Models
         public int Total { get; set; }
         public int InStock { get; set; }
 
-        public IEnumerable<ColorProduct> ColorProducts { get; set; }
+        public IEnumerable<Color> Colors { get; set; }
         public IEnumerable<Size> Sizes { get; set; }
         public IEnumerable<Review> Reviews { get; set; }
     }

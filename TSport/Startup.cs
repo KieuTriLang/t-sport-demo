@@ -9,7 +9,6 @@ using TSport.Models.Data;
 using TSport.Services.BlogService;
 using TSport.Services.BrandService;
 using TSport.Services.CategoryService;
-using TSport.Services.ColorProductService;
 using TSport.Services.ColorService;
 using TSport.Services.OHProductService;
 using TSport.Services.OrderHistoryService;
@@ -48,7 +47,6 @@ namespace TSport
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IColorProductService, ColorProductService>();
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<IOHProductService, OHProductService>();
             services.AddScoped<IOrderHistoryService, OrderHistoryService>();

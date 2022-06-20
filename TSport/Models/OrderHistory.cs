@@ -11,7 +11,7 @@ namespace TSport.Models
         }
         public int Id { get; set; }
         public User User { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public IEnumerable<OHProduct> OHProducts { get; set; }
         public string CouponCode { get; set; }
         public string ToLocation { get; set; }
