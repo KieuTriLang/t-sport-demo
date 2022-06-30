@@ -78,3 +78,4 @@ C:\Users\DELL\source\repos\TSport\TSport\obj\Debug\net5.0\TSport.csproj.CopyComp
 C:\Users\DELL\source\repos\TSport\TSport\obj\Debug\net5.0\TSport.genruntimeconfig.cache
 C:\Users\DELL\source\repos\TSport\TSport\obj\Debug\net5.0\ref\TSport.dll
 C:\Users\DELL\source\repos\TSport\TSport\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\DELL\source\repos\TSport\TSport\obj\Debug\net5.0\Razor\Views\Product\ProductById.cshtml.g.cs

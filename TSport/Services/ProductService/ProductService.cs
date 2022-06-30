@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TSport.Models;
@@ -49,12 +50,23 @@ namespace TSport.Services.ProductService
 
         public Product Get(int id)
         {
-            return _db.Products.Where(p => p.Id == id).FirstOrDefault();
+            return _db.Products.Where(p => p.Id == id)
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .Include(p => p.Colors)
+                .Include(p => p.Sizes)
+                .Include(p => p.Images)
+                .Include(p => p.Reviews)
+                    .ThenInclude(r => r.User)
+                .FirstOrDefault();
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return _db.Products.ToList();
+            return _db.Products
+                .Include(p => p.Sizes)
+                .Include(p => p.Images)
+                .ToList();
         }
 
         public IEnumerable<Product> Update(Product model)

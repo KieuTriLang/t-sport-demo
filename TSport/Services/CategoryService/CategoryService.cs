@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TSport.Models;
@@ -70,5 +71,12 @@ namespace TSport.Services.CategoryService
             }
             return GetAll();
         }
+
+        public List<TopCategory> GetTopCategory()
+        { 
+            var result = _db.Categories.Include(c=>c.Products).Select(c=> new TopCategory { Id = c.Id,Name=c.Name,Count = c.Products.Count()});
+            return result.ToList();
+        }
     }
+    
 }

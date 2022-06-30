@@ -45,6 +45,7 @@ namespace TSport.Models.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<Image> Images { get; set; }
         public DbSet<OHProduct> OHProducts { get; set; }
         public DbSet<OrderHistory> OrderHistories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -56,18 +57,25 @@ namespace TSport.Models.Data
         private static string[] arrNameBrand = { "Lakmetao", "Beautifullis", "Mate in TW", "Percifco", "Xlowete" };
         private static string[] arrHexCode = { "#586882", "#505050", "#73707A", "#C7BB9B" };
         private static string[] arrNameSize = { "S", "M", "L", "XL", "XXL" };
+        private static string[] arrNameFile = { "1.webp","2.webp","3.webp","4.webp" };
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Product>().HasMany(p => p.Colors).WithMany(p => p.Products);
+            
+
             this.SeedUsers(builder);
             this.SeedBlog(builder, 16);
             this.SeedBrand(builder, arrNameBrand);
             this.SeedCategory(builder, arrNameCategory);
             this.SeedColor(builder, arrHexCode);
+            this.SeedImage(builder, arrNameFile);
             this.SeedSize(builder, arrNameSize);
             this.SeedOrderHistory(builder, 5);
-            this.SeedProduct(builder, 30, arrHexCode, arrNameSize);
+            this.SeedProduct(builder, 30, arrHexCode, arrNameSize, arrNameFile);
             this.SeedReview(builder, 25);
             this.SeedOHProduct(builder, 40);
         }
@@ -143,6 +151,19 @@ namespace TSport.Models.Data
             }
             builder.Entity<Color>().HasData(colors);
         }
+        private void SeedImage(ModelBuilder builder, string[] arrNameFile)
+        {
+            List<Image> images = new List<Image>();
+            for (int i = 0; i < arrNameFile.Length; i++)
+            {
+                images.Add(new Image
+                {
+                    Id = i + 1,
+                    Url = $"assets/img/shop/product-single/{arrNameFile[i]}"
+                }) ;
+            }
+            builder.Entity<Image>().HasData(images);
+        }
         private void SeedOrderHistory(ModelBuilder builder, int quantity)
         {
             List<OrderHistory> orders = new List<OrderHistory>();
@@ -173,10 +194,11 @@ namespace TSport.Models.Data
             }
             builder.Entity<Size>().HasData(sizes);
         }
-        private void SeedProduct(ModelBuilder builder, int quantity, string[] arrHexCode, string[] arrNameSize)
+        private void SeedProduct(ModelBuilder builder, int quantity, string[] arrHexCode, string[] arrNameSize,string[] arrNameFile)
         {
             object[] colorProducts = new object[quantity * arrHexCode.Length];
             object[] sizeProducts = new object[quantity * arrNameSize.Length];
+            object[] imageProducts = new object[quantity * arrNameFile.Length];
 
             List<Product> products = new List<Product>();
             for (int i = 0; i < quantity; i++)
@@ -188,6 +210,10 @@ namespace TSport.Models.Data
                 for (int j = 0; j < arrNameSize.Length; j++)
                 {
                     sizeProducts[i * arrNameSize.Length + j] = new { ProductsId = i + 1, SizesId = j + 1 };
+                }
+                for (int j = 0; j < arrNameFile.Length; j++)
+                {
+                    imageProducts[i * arrNameFile.Length + j] = new { ProductsId = i + 1, ImagesId = j + 1 };
                 }
                 products.Add(new Product
                 {
@@ -207,6 +233,7 @@ namespace TSport.Models.Data
             builder.Entity<Product>().HasData(products);
             builder.Entity<Color>().HasMany(p => p.Products).WithMany(c => c.Colors).UsingEntity(j => j.HasData(colorProducts));
             builder.Entity<Size>().HasMany(p => p.Products).WithMany(c => c.Sizes).UsingEntity(j => j.HasData(sizeProducts));
+            builder.Entity<Image>().HasMany(p => p.Products).WithMany(c => c.Images).UsingEntity(j => j.HasData(imageProducts));
         }
         private void SeedReview(ModelBuilder builder, int quantity)
         {
@@ -216,12 +243,13 @@ namespace TSport.Models.Data
                 reviews.Add(new Review
                 {
                     Id = i + 1,
+                    Title = randomSentence(7),
                     Rate = randomFromTo(1, 5),
                     Comment = randomSentence(30),
                     ProductId = randomFromTo(1, 30),
                     UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
                     TimePosted = DateTime.Now
-                }); ;
+                }) ; ;
             }
             builder.Entity<Review>().HasData(reviews);
         }

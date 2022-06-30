@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TSport.Models;
@@ -55,6 +56,11 @@ namespace TSport.Services.SizeService
         public IEnumerable<Size> GetAll()
         {
             return _db.Sizes.ToList();
+        }
+
+        public IEnumerable<TopSize> GetTopSize()
+        {
+            return _db.Sizes.Include(s => s.Products).Select(s => new TopSize { Id = s.Id, Name = s.Name, Count = s.Products.Count() });
         }
 
         public IEnumerable<Size> Update(Size model)

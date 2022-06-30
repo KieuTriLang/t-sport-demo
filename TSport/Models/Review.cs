@@ -9,6 +9,7 @@ namespace TSport.Models
         public string UserId { get; set; }
         public Product Product { get; set; }
         public int ProductId { get; set; }
+        public string Title { get; set; }
         public int Rate { get; set; }
         public string Comment { get; set; }
         public DateTime TimePosted { get; set; }
